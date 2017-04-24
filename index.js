@@ -13,20 +13,8 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket) {
     console.log('User connected with socketID: ' + socket.id);
 
-    // socket.on('message', function(name, body) {
     socket.on('message', function(name, body) {
-        //socket.emit('message', {user: name, message: body});
-        console.log(name, body);
-        var sockets = io.sockets.sockets;
-
-        console.log(sockets instanceof Array);
-        
-        sockets.forEach(function(s) {
-            if(s.id != socket.id) {
-                socket.emit('message', {user: name, message: body});
-            }
-        })
-
+        socket.broadcast.emit('messageServer', {user: name, message: body});
     });
 
     socket.on('disconnect', function() {
