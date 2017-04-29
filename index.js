@@ -13,8 +13,9 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket) {
     console.log('User connected with socketID: ' + socket.id);
 
-    socket.on('message', function(name, body) {
-        socket.broadcast.emit('messageServer', {user: name, message: body});
+    socket.on('message', function(name, body, key) {
+	console.log("name: ", name, "body", body, "key", key);
+        socket.broadcast.emit('messageServer', {user: name, message: body, key: key});
     });
 
     socket.on('disconnect', function() {
